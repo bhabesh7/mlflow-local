@@ -1,0 +1,92 @@
+# # version: '3.8'
+
+# services:
+#   mlflow:
+#     image: ghcr.io/mlflow/mlflow:latest
+#     container_name: mlflow
+#     ports:
+#       - "5000:5000"
+#     volumes:
+#       - ./mlruns:/mlflow/mlruns        # Mount for experiment logs
+#       - ./backend:/mlflow/backend       # Optional DB storage
+#     command: >
+#       mlflow server
+#       --backend-store-uri sqlite:///mlflow/backend/mlflow.db
+#       --default-artifact-root file:/mlflow/mlruns
+#       --host 0.0.0.0
+
+
+
+
+# services:
+#   mlflow:
+#     image: ghcr.io/mlflow/mlflow
+#     container_name: mlflow-server
+#     ports:
+#       - "5000:5000"
+#     volumes:
+#       - ./mlruns:/mlruns          # host → container mapping
+#       - ./backend:/backend
+#     command: >
+#       mlflow server
+#       --backend-store-uri sqlite:///backend/mlflow.db
+#       --default-artifact-root file:/mlruns
+#       --host 0.0.0.0
+#       --port 5000
+
+
+
+# services:
+#   mlflow:
+#     image: ghcr.io/mlflow/mlflow:latest
+#     ports:
+#       - "5000:5000"
+#     volumes:
+#       - ./mlruns:/mlflow/mlruns
+#     environment:
+#       - MLFLOW_ARTIFACT_ROOT=/mlflow/mlruns
+#     command: >
+#       mlflow server
+#       --backend-store-uri sqlite:///mlflow.db
+#       --default-artifact-root /mlflow/mlruns
+#       --host 0.0.0.0
+
+
+# runs fine -->
+# services:
+#   mlflow:
+#     image: ghcr.io/mlflow/mlflow:latest
+#     ports:
+#       - "5000:5000"
+#     volumes:
+#       - ./mlruns:/mlflow/mlruns
+#     environment:
+#       - MLFLOW_ARTIFACT_ROOT=file:/mlflow/mlruns
+#       # the chown command is used to ensure that the mlflow user has the correct permissions
+#     command: >
+#       bash -c "
+#       chown -R 1000:1000 /mlflow &&
+#       mlflow server
+#       --backend-store-uri sqlite:///mlflow.db
+#       --default-artifact-root file:/mlflow/mlruns
+#       --host 0.0.0.0
+#       "
+
+
+ # --backend-store-uri sqlite:///mlflow.db
+services:
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    ports:
+      - "5000:5000"
+    volumes:
+      # - ./mlruns:/home/mlflow/mlruns  # safer than /mlflow
+      - /home/mlflow/mlruns:/home/mlflow/mlruns
+    environment:
+      - MLFLOW_ARTIFACT_ROOT=file:/home/mlflow/mlruns
+    command: >
+      mlflow server     
+      --backend-store-uri sqlite:///home/mlflow/mlflow.db
+      --default-artifact-root file:/home/mlflow/mlruns
+      --host 0.0.0.0
+
