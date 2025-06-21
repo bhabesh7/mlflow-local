@@ -47,5 +47,11 @@ Goto terminal >
 5. check mlflow server running in localhost:5000
 6. The test_mlflow.py can be used from a different project to set the tracking uri to this server and log experiments/models etc
 
+Find which process is using port 9009:
+sudo lsof -i :9009
 
+Stop the process (replace <PID> with the actual process ID):
+sudo kill <PID>
 
+Or, if you want to stop all processes using that port:
+sudo fuser -k 9009/tcp

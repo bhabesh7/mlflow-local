@@ -1,0 +1,24 @@
+# Ignore Python virtual environments
+.venv/
+venv/
+
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# VS Code settings
+.vscode/
+
+# Environment variables or secrets
+# .env
+
+#db files
+*.db
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs and temp files
+*.log
+*.tmp
